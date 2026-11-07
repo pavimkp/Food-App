@@ -1,0 +1,1110 @@
+{
+  "info": {
+    "name": "Food Ordering API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{adminUser}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{adminPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "adminUser",
+      "value": "admin"
+    },
+    {
+      "key": "adminPassword",
+      "value": "adminapp123"
+    },
+    {
+      "key": "napoliId",
+      "value": ""
+    },
+    {
+      "key": "burgerId",
+      "value": ""
+    },
+    {
+      "key": "spiceId",
+      "value": ""
+    },
+    {
+      "key": "inactiveId",
+      "value": ""
+    },
+    {
+      "key": "margheritaId",
+      "value": ""
+    },
+    {
+      "key": "friesId",
+      "value": ""
+    },
+    {
+      "key": "tiramisuId",
+      "value": ""
+    },
+    {
+      "key": "orderId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1 Setup data (run these first, in order)",
+      "item": [
+        {
+          "name": "Add restaurant: Napoli Slice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/restaurants",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Napoli Slice\",\n  \"description\": \"Wood-fired pizzas and Italian classics.\",\n  \"address\": \"14 Northern Quarter, Manchester\",\n  \"imageUrl\": \"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800\",\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });",
+                  "pm.collectionVariables.set('napoliId', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add restaurant: Burger Barn",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/restaurants",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Burger Barn\",\n  \"description\": \"Juicy handmade burgers and crispy fries.\",\n  \"address\": \"88 Deansgate, Manchester\",\n  \"imageUrl\": \"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800\",\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });",
+                  "pm.collectionVariables.set('burgerId', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add restaurant: Spice Route",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/restaurants",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Spice Route\",\n  \"description\": \"Fragrant curries, grills and fresh naan.\",\n  \"address\": \"5 Curry Mile, Rusholme, Manchester\",\n  \"imageUrl\": \"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800\",\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });",
+                  "pm.collectionVariables.set('spiceId', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add restaurant: Old Mill Diner",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/restaurants",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Old Mill Diner\",\n  \"description\": \"Closed for refurbishment (inactive test data).\",\n  \"address\": \"1 Mill Lane, Manchester\",\n  \"imageUrl\": null,\n  \"active\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });",
+                  "pm.collectionVariables.set('inactiveId', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add food: Margherita Pizza",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{napoliId}},\n  \"name\": \"Margherita Pizza\",\n  \"description\": \"Tomato, mozzarella and fresh basil.\",\n  \"price\": 9.99,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600\",\n  \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });",
+                  "pm.collectionVariables.set('margheritaId', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add food: Pepperoni Pizza",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{napoliId}},\n  \"name\": \"Pepperoni Pizza\",\n  \"description\": \"Spicy pepperoni on a mozzarella base.\",\n  \"price\": 11.49,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600\",\n  \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add food: Garlic Bread",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{napoliId}},\n  \"name\": \"Garlic Bread\",\n  \"description\": \"Toasted with garlic butter and herbs.\",\n  \"price\": 4.5,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1573140401552-3fab0b24306f?w=600\",\n  \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add food: Tiramisu",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{napoliId}},\n  \"name\": \"Tiramisu\",\n  \"description\": \"Classic coffee-soaked Italian dessert.\",\n  \"price\": 5.99,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600\",\n  \"available\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });",
+                  "pm.collectionVariables.set('tiramisuId', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add food: Classic Cheeseburger",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{burgerId}},\n  \"name\": \"Classic Cheeseburger\",\n  \"description\": \"Beef patty, cheddar, lettuce, tomato.\",\n  \"price\": 8.99,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600\",\n  \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add food: Chicken Burger",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{burgerId}},\n  \"name\": \"Chicken Burger\",\n  \"description\": \"Crispy chicken with mayo and pickles.\",\n  \"price\": 8.49,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=600\",\n  \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add food: Loaded Fries",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{burgerId}},\n  \"name\": \"Loaded Fries\",\n  \"description\": \"Fries with cheese sauce and bacon bits.\",\n  \"price\": 5.49,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600\",\n  \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });",
+                  "pm.collectionVariables.set('friesId', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add food: Chicken Tikka Masala",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{spiceId}},\n  \"name\": \"Chicken Tikka Masala\",\n  \"description\": \"Grilled chicken in a creamy tomato sauce.\",\n  \"price\": 10.99,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600\",\n  \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add food: Lamb Rogan Josh",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{spiceId}},\n  \"name\": \"Lamb Rogan Josh\",\n  \"description\": \"Slow-cooked lamb in a rich spiced gravy.\",\n  \"price\": 12.49,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1545247181-516773cae754?w=600\",\n  \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add food: Garlic Naan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{spiceId}},\n  \"name\": \"Garlic Naan\",\n  \"description\": \"Soft tandoor bread with garlic.\",\n  \"price\": 2.99,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1626074353765-517a681e40be?w=600\",\n  \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2 Public APIs",
+      "item": [
+        {
+          "name": "List restaurants (inactive one hidden)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/restaurants",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function(){ pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get restaurant",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/restaurants/{{napoliId}}",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function(){ pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Menu of Napoli Slice (Tiramisu unavailable)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/restaurants/{{napoliId}}/food-items",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function(){ pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search food: burger",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/food-items/search?name=burger",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function(){ pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3 Orders",
+      "item": [
+        {
+          "name": "Place order (2 x Margherita + 1 x Loaded Fries)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/orders",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Asha Rao\",\n  \"phone\": \"07123456789\",\n  \"deliveryAddress\": \"12 Park Street, Manchester\",\n  \"paymentMethod\": \"COD\",\n  \"items\": [\n    {\n      \"foodItemId\": {{margheritaId}},\n      \"quantity\": 2\n    },\n    {\n      \"foodItemId\": {{friesId}},\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201', function(){ pm.response.to.have.status(201); });",
+                  "pm.collectionVariables.set('orderId', pm.response.json().id);",
+                  "pm.test('total is 25.47', function(){ pm.expect(pm.response.json().totalAmount).to.eql(25.47); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get order (confirmation)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/orders/{{orderId}}",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function(){ pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4 Admin APIs",
+      "item": [
+        {
+          "name": "Admin: list all restaurants (incl. inactive)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/restaurants"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function(){ pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin: update Margherita price to 10.99",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items/{{margheritaId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{napoliId}},\n  \"name\": \"Margherita Pizza\",\n  \"description\": \"Tomato, mozzarella and fresh basil.\",\n  \"price\": 10.99,\n  \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function(){ pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin: list all orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/orders"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function(){ pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "5 Failure cases",
+      "item": [
+        {
+          "name": "FAIL 401: admin API without login",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/orders",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 401', function(){ pm.response.to.have.status(401); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL 400: negative price",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": {{napoliId}},\n  \"name\": \"Bad\",\n  \"price\": -1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 400', function(){ pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL 400: blank restaurant name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/restaurants",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"address\": \"x\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 400', function(){ pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL 404: food item for unknown restaurant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/food-items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": 999999,\n  \"name\": \"Ghost\",\n  \"price\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 404', function(){ pm.response.to.have.status(404); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL 400: order unavailable item (Tiramisu)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/orders",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Asha Rao\",\n  \"phone\": \"07123456789\",\n  \"deliveryAddress\": \"12 Park Street\",\n  \"items\": [\n    {\n      \"foodItemId\": {{tiramisuId}},\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 400', function(){ pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL 404: order unknown food item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/orders",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Asha Rao\",\n  \"phone\": \"07123456789\",\n  \"deliveryAddress\": \"12 Park Street\",\n  \"items\": [\n    {\n      \"foodItemId\": 999999,\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 404', function(){ pm.response.to.have.status(404); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL 400: order quantity 0 and empty name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/orders",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"\",\n  \"phone\": \"07123456789\",\n  \"deliveryAddress\": \"12 Park Street\",\n  \"items\": [\n    {\n      \"foodItemId\": {{margheritaId}},\n      \"quantity\": 0\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 400', function(){ pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL 400: order with no items",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/orders",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Asha Rao\",\n  \"phone\": \"07123456789\",\n  \"deliveryAddress\": \"12 Park Street\",\n  \"items\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 400', function(){ pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL 404: order that does not exist",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/orders/999999",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 404', function(){ pm.response.to.have.status(404); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL 404: inactive restaurant",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/restaurants/{{inactiveId}}",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 404', function(){ pm.response.to.have.status(404); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL 409: delete food item that has past orders",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/food-items/{{margheritaId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 409', function(){ pm.response.to.have.status(409); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
